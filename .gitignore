@@ -1,0 +1,4 @@
+.DS_Store
+.idea
+mongo/data/*
+server/node_modules
