@@ -12,19 +12,20 @@
     "prettier"
   ],
   "rules": {
-    "prettier/prettier": "error",
-    "import/prefer-default-export": "off",
-    "no-plusplus": "off",
-    "no-underscore-dangle": "off",
     "comma-dangle": [
       "error",
       "never"
     ],
+    "import/prefer-default-export": "off",
     "linebreak-style": [
       "error",
       "unix"
     ],
     "no-console": "error",
+    "no-plusplus": "off",
+    "no-underscore-dangle": "off",
+    "no-use-before-define": "off",
+    "prettier/prettier": "error",
     "semi": [
       "error",
       "always"

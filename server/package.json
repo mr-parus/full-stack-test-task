@@ -8,6 +8,8 @@
     "test:in_container": "docker-compose exec server_dev npm run test"
   },
   "dependencies": {
+    "busboy": "^0.3.1",
+    "csv-parse": "^4.8.5",
     "http-custom-errors": "^8.0.0",
     "kcors": "^2.2.2",
     "koa": "^2.11.0",
@@ -17,6 +19,7 @@
     "koa-router": "^8.0.8",
     "lodash": "^4.17.15",
     "mongoose": "^5.9.1",
+    "p-limit": "^2.2.2",
     "pretty-ms": "^6.0.0",
     "validator": "^12.2.0",
     "wait-port": "^0.2.7",

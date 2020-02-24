@@ -5,16 +5,16 @@ const formatJSONResponse = async (ctx, next) => {
     ctx.type = 'application/json';
     await next();
 
-    const { code = 200, data = null } = ctx.state.result || {};
+    const { code = 200, data } = ctx.state.result || {};
 
     ctx.status = code;
-    ctx.body = { data, status: data ? 'OK' : 'No Content' };
+    ctx.body = { data, status: 'Ok' };
   } catch (err) {
     if (err instanceof HTTPErrors.HTTPError) {
-      const { message = '', status = 'Error' } = err;
+      const { message = '', status = 'Error', code } = err;
 
-      ctx.status = err.code;
-      ctx.body = { data: null, status, msg: message };
+      ctx.status = code;
+      ctx.body = { status, message };
     } else {
       ctx.throw(500, err);
     }

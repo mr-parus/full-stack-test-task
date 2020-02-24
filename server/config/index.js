@@ -18,7 +18,10 @@ export const db = {
     },
     connectURI: `mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_HOST}:${MONGO_PORT}/${MONGO_DB_NAME}`,
     host: MONGO_HOST,
-    port: +MONGO_PORT
+    port: +MONGO_PORT,
+    collectionNames: {
+      users: ENVIRONMENT === 'test' ? 'users.test' : 'users'
+    }
   }
 };
 
