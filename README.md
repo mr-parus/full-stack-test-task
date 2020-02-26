@@ -1,8 +1,10 @@
 # full-stack-test-task
 Full stack project.  Uploading .csv files with drag &amp; drop
 
-video sample:
-[![Sample](http://img.youtube.com/vi/6kUDhgaWTqk/0.jpg)](http://www.youtube.com/watch?v=6kUDhgaWTqk "Sample")
+Video sample:
+
+
+[![web view](http://img.youtube.com/vi/MnY8Ko0pOC8/0.jpg)](http://www.youtube.com/watch?v=MnY8Ko0pOC8 "Step by step")
 
 
 # Commands
