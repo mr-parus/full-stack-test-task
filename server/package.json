@@ -5,7 +5,7 @@
     "dev": "nodemon --experimental-modules --es-module-specifier-resolution=node ./index.js",
     "start": "NODE_ENV=production node --experimental-modules --es-module-specifier-resolution=node ./index.js",
     "test": "NODE_ENV=test node --experimental-modules --es-module-specifier-resolution=node node_modules/.bin/mocha",
-    "test:in_container": "docker-compose exec server_dev npm run test"
+    "test:in_container": "docker-compose exec server npm run test"
   },
   "dependencies": {
     "busboy": "^0.3.1",

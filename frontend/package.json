@@ -24,6 +24,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:in_container": "docker-compose exec server sh -c 'cd /frontend && npm run test'",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

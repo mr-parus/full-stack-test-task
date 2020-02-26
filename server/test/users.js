@@ -29,7 +29,7 @@ before(async () => {
 });
 
 describe('Users import by uploading a .csv file', function test() {
-  this.timeout(35 * 1000);
+  this.timeout(40 * 1000);
 
   describe('Error handling ', () => {
     it('should return 400 Error if no files attached', async () => {

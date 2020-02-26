@@ -1,9 +1,6 @@
 version: '3'
 
 services:
-
-  # DB
-
   mongo:
     build:
       context: ./mongo
@@ -16,19 +13,18 @@ services:
       - ./mongo/mongod.conf:/etc/mongod.conf
       - ./mongo/data:/data/db
 
-  # SERVER
-
-  server_dev:
+  server:
     build:
-      context: ./server
-      dockerfile: Dockerfile.dev
-    environment:
-      - MONGO_HOST=mongo
+      context: ./
+    command: dev
     depends_on:
       - mongo
-    restart: always
+    environment:
+      - MONGO_HOST=mongo
     ports:
       - 3000:3000
     volumes:
-      - /app/node_modules
-      - ./server:/app
+      - /server/node_modules
+      - /frontend/node_modules
+      - ./server:/server
+      - ./frontend:/frontend
