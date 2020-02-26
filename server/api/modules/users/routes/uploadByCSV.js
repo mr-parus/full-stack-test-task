@@ -1,4 +1,5 @@
 import HTTPErrors from 'http-custom-errors';
+import log from '../../../../utils/logger';
 
 import insertManyUsers from '../handlers/insertMany';
 import { parseCSV } from '../../../../utils/csv.parser';
@@ -20,7 +21,8 @@ export default async ctx => {
 
   const [insertionError, { insertedCount }] = await catchAsync(insertManyUsers, usersData);
   if (insertionError) {
-    throw HTTPErrors.createHTTPError(500, 'Failed on insertion!');
+    log.error(insertionError);
+    throw HTTPErrors.InternalServerError(`Failed on insertion! ${insertionError.message}`);
   }
 
   ctx.state.result = {

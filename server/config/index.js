@@ -1,5 +1,11 @@
+import path from 'path';
+import { fileURLtoDirPath } from '../utils/sugar';
+
 export const ENVIRONMENT = process.env.NODE_ENV || 'development';
 const isDevelopment = ENVIRONMENT === 'development';
+
+const __dirname = fileURLtoDirPath(import.meta.url);
+const assetsPath = path.resolve(__dirname, '../../frontend/build');
 
 const {
   MONGO_DB_NAME = 'db',
@@ -26,7 +32,8 @@ export const db = {
 };
 
 export const server = {
-  port: 3000
+  port: 3000,
+  assetsPath
 };
 
 export const logger = {

@@ -2,11 +2,11 @@ import chai from 'chai';
 import path from 'path';
 import supertest from 'supertest';
 
-import User from '../api/models/User';
 import { app } from '../app';
 import { connect as connectToMongoDb } from '../utils/db/mongo';
-import { fileURLtoDirPath } from '../utils/sugar';
 import { getLinesCount } from '../utils/helpers';
+import { fileURLtoDirPath } from '../utils/sugar';
+import { emptyUsersCollection, getNumberOfDocuments, insertNUsers } from './helper';
 
 const { expect } = chai;
 const __dirname = fileURLtoDirPath(import.meta.url);
@@ -19,8 +19,8 @@ const smallFilePath = path.resolve(__dirname, './data/small.csv');
 
 let request;
 
-const emptyUsersCollection = async () => User.remove({});
-const getNumberOfDocuments = async () => User.collection.count();
+const maxSearchResultCount = 20;
+const searchQuerySalt = 'test';
 
 before(async () => {
   await connectToMongoDb();
@@ -28,7 +28,7 @@ before(async () => {
   request = supertest(app.listen());
 });
 
-describe('Users import by uploading a .csv file', function() {
+describe('Users import by uploading a .csv file', function test() {
   this.timeout(35 * 1000);
 
   describe('Error handling ', () => {
@@ -61,7 +61,7 @@ describe('Users import by uploading a .csv file', function() {
   });
 
   describe('Successful scenarios', () => {
-    afterEach(() => emptyUsersCollection());
+    afterEach(async () => emptyUsersCollection());
 
     it('should process empty files', async () => {
       const linesCount = await getLinesCount(emptyFilePath);
@@ -123,5 +123,46 @@ describe('Users import by uploading a .csv file', function() {
       expect(body.data.insertedCount).be.eq(linesCount);
       expect(await getNumberOfDocuments()).be.eq(linesCount);
     });
+  });
+});
+
+describe('Users partial match searching', () => {
+  before(async () => {
+    await insertNUsers(maxSearchResultCount + 5, searchQuerySalt);
+  });
+
+  after(async () => emptyUsersCollection());
+
+  it('should find max number of records if no qury string provided', async () => {
+    const { body } = await request
+      .get('/api/users/search')
+      .query({ query: '' })
+      .expect(200);
+
+    expect(body.data.users.length).be.eq(maxSearchResultCount);
+    body.data.users.forEach(user => {
+      expect(user).to.have.keys(['address', 'age', 'fullName', 'color', 'id']);
+    });
+  });
+
+  it('should find max number of records if provided the proper query string', async () => {
+    const { body } = await request
+      .get('/api/users/search')
+      .query({ query: searchQuerySalt })
+      .expect(200);
+
+    expect(body.data.users.length).be.eq(maxSearchResultCount);
+    body.data.users.forEach(user => {
+      expect(user).to.have.keys(['address', 'age', 'fullName', 'color', 'id']);
+    });
+  });
+
+  it('should find nothing if wrong query', async () => {
+    const { body } = await request
+      .get('/api/users/search')
+      .query({ query: 'XXXXXXXXXXX' })
+      .expect(200);
+
+    expect(body.data.users.length).be.eq(0);
   });
 });

@@ -4,31 +4,18 @@
     "mocha": true,
     "node": true
   },
-  "extends": [
-    "airbnb-base",
-    "prettier"
-  ],
-  "plugins": [
-    "prettier"
-  ],
+  "extends": ["airbnb-base", "prettier"],
+  "parser": "babel-eslint",
+  "plugins": ["prettier"],
   "rules": {
-    "comma-dangle": [
-      "error",
-      "never"
-    ],
+    "comma-dangle": ["error", "never"],
     "import/prefer-default-export": "off",
-    "linebreak-style": [
-      "error",
-      "unix"
-    ],
+    "linebreak-style": ["error", "unix"],
     "no-console": "error",
     "no-plusplus": "off",
     "no-underscore-dangle": "off",
     "no-use-before-define": "off",
     "prettier/prettier": "error",
-    "semi": [
-      "error",
-      "always"
-    ]
+    "semi": ["error", "always"]
   }
 }

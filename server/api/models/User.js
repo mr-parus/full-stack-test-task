@@ -37,7 +37,11 @@ const User = new mongoose.Schema({
 // User.createIndex({ address: 1, age: 1, fullName: 1 }, { unique: true });
 
 User.set('toJSON', {
-  transform: (doc, ret) => ({ ..._.omit(ret, ['__v', '_id']), id: ret._id.toString() })
+  transform: (doc, ret) => ({
+    ..._.omit(ret, ['__v', '_id', 'color']),
+    color: ret.color.toLowerCase(),
+    id: ret._id.toString()
+  })
 });
 
 export default mongoose.model(collectionName, User);
